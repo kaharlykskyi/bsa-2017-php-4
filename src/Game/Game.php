@@ -11,44 +11,53 @@ use BinaryStudioAcademy\Game\Contracts\Io\Reader,
 class Game
 {
     const COINS_TO_WIN = 5;
+
     public $user;
     private $executor;
+    private $username = "";
 
     /**
      * Initialize new game world.
      */
     public function __construct()
     {
-        $hall = new Room\Hall;
-        $basement = new Room\Basement;
-        $bedroom = new Room\Bedroom;
-        $cabinet = new Room\Cabinet;
-        $corridor = new Room\Corridor;
+        $this->hall = new Room\Hall;
+        $this->basement = new Room\Basement;
+        $this->bedroom = new Room\Bedroom;
+        $this->cabinet = new Room\Cabinet;
+        $this->corridor = new Room\Corridor;
 
         //creating game world (rooms, coins)
-        $hall->addCoinToRoom(new Coin());
-        $basement->addCoinToRoom(new Coin());
-        $basement->addCoinToRoom(new Coin());
-        $cabinet->addCoinToRoom(new Coin());
-        $bedroom->addCoinToRoom(new Coin());
-        $corridor->addAccessibleRoom($hall);
-        $corridor->addAccessibleRoom($cabinet);
-        $corridor->addAccessibleRoom($bedroom);
-        $hall->addAccessibleRoom($basement);
-        $hall->addAccessibleRoom($corridor);
-        $basement->addAccessibleRoom($cabinet);
-        $basement->addAccessibleRoom($hall);
-        $cabinet->addAccessibleRoom($corridor);
-        $bedroom->addAccessibleRoom($corridor);
+        $this->hall->addCoinToRoom(new Coin());
+        $this->basement->addCoinToRoom(new Coin());
+        $this->basement->addCoinToRoom(new Coin());
+        $this->cabinet->addCoinToRoom(new Coin());
+        $this->bedroom->addCoinToRoom(new Coin());
+        $this->corridor->addAccessibleRoom($this->hall);
+        $this->corridor->addAccessibleRoom($this->cabinet);
+        $this->corridor->addAccessibleRoom($this->bedroom);
+        $this->hall->addAccessibleRoom($this->basement);
+        $this->hall->addAccessibleRoom($this->corridor);
+        $this->basement->addAccessibleRoom($this->cabinet);
+        $this->basement->addAccessibleRoom($this->hall);
+        $this->cabinet->addAccessibleRoom($this->corridor);
+        $this->bedroom->addAccessibleRoom($this->corridor);
 
-        $this->user = new User($hall);
+        $this->user = new User($this->hall, $this->username);
         $this->executor = new Executor($this);
     }
 
     public function start(Reader $reader, Writer $writer)
     {
+        $writer->writeln("You can't play yet. Please read input and convert it to commands.");
+
+        do {
+            $writer->write("Type your name: ");
+            $this->username = trim($reader->read());
+        } while (empty($this->username));
+
         while(true) {
-            $writer->write("game> ");
+            $writer->write($this->username."> ");
             $this->run($reader, $writer);
             if ($this->executor->isFinished()) {
                 break;
@@ -66,10 +75,4 @@ class Game
         $writer->writeln($this->executor->getMessage());
     }
 
-    public function __get($var) {
-        if ($var === "user") {
-            return $this->user;
-        }
-        return null;
-    }
 }

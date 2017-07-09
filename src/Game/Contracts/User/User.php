@@ -12,19 +12,18 @@ use BinaryStudioAcademy\Game\Contracts\Room\AbstractRoom;
 
 class User
 {
-    private $userName;
     private $inventory = [];
     public $room;
 
     /**
      * Initialize new user
      * @param AbstractRoom $room
-     * @param string $name
+     * @param string $username
      */
-    public function __construct(AbstractRoom $room, string $name = 'newPlayer')
+    public function __construct(AbstractRoom $room, string $username)
     {
-        $this->userName = $name;
         $this->room = $room;
+        $this->username = $username;
     }
 
     /**
@@ -53,17 +52,5 @@ class User
         return count($this->inventory['coin'] ?? []);
     }
 
-    /**
-     *
-     * @param $val
-     * @return AbstractRoom|null
-     */
-    public function __get($val)
-    {
-        if ($val == "room") {
-            return $this->room;
-        }
-        return null;
-    }
 
 }

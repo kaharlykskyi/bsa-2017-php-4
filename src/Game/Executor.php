@@ -25,7 +25,7 @@ class Executor
     {
         $this->game = $game;
         $this->isFinished = false;
-        $this->msg = '';
+        $this->msg = "";
     }
 
     /**

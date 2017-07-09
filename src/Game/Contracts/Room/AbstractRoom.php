@@ -12,7 +12,7 @@ use BinaryStudioAcademy\Game\Contracts\Coin\Coin,
     BinaryStudioAcademy\Game\Exception\NotFound;
 
 
-class AbstractRoom
+abstract class AbstractRoom
 {
     public $room = array();
     public $coin = array();
@@ -24,8 +24,8 @@ class AbstractRoom
     public function getRoomName()
     {
         if (get_called_class() !== false) {
-            $RoomName = str_replace(__NAMESPACE__ . "\\", "", get_called_class());
-            return strtolower($RoomName);
+            $roomName = str_replace(__NAMESPACE__ . "\\", "", get_called_class());
+            return strtolower($roomName);
         } else {
             return false;
         }
@@ -94,6 +94,6 @@ class AbstractRoom
      */
     public function CoinCount() : int
     {
-        return count($this->coin) ?? [];
+        return count($this->coin);
     }
 }

@@ -8,3 +8,4 @@ $writer = new \BinaryStudioAcademy\Game\Io\CliWriter();
 $game = new \BinaryStudioAcademy\Game\Game;
 
 $game->start($reader, $writer);
+//$game->run($reader, $writer);

@@ -13,6 +13,7 @@ use BinaryStudioAcademy\Game\Contracts\Room\AbstractRoom;
 class User
 {
     private $inventory = [];
+    private $username;
     public $room;
 
     /**

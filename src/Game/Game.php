@@ -21,13 +21,12 @@ class Game
      */
     public function __construct()
     {
+        //creating game world (rooms, coins)
         $this->hall = new Room\Hall;
         $this->basement = new Room\Basement;
         $this->bedroom = new Room\Bedroom;
         $this->cabinet = new Room\Cabinet;
         $this->corridor = new Room\Corridor;
-
-        //creating game world (rooms, coins)
         $this->hall->addCoinToRoom(new Coin());
         $this->basement->addCoinToRoom(new Coin());
         $this->basement->addCoinToRoom(new Coin());
@@ -66,10 +65,18 @@ class Game
         return false;
     }
 
+    /**
+     * Step by step game mode.
+     * Reading command with args.
+     * @param Reader $reader
+     * @param Writer $writer
+     */
     public function run(Reader $reader, Writer $writer)
     {
+
         $input = trim($reader->read());
         $args = explode(" ", $input);
+        //if (count($args) >= 3) $writer->writeln("Too many arguments. Type 'help' for available commands.");
         $command = array_shift($args);
         $this->executor->command($command, $args);
         $writer->writeln($this->executor->getMessage());

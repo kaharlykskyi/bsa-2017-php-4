@@ -20,6 +20,7 @@ abstract class AbstractRoom
     /**
      * Method returns name of current room
      * @return bool|string
+     * @throws NotFound exception if room not found
      */
     public function getRoomName()
     {
@@ -27,7 +28,7 @@ abstract class AbstractRoom
             $roomName = str_replace(__NAMESPACE__ . "\\", "", get_called_class());
             return strtolower($roomName);
         } else {
-            return false;
+            throw new NotFound("Undefined room.");
         }
     }
 

@@ -33,7 +33,7 @@ class Executor
      * @param $command
      * @param $args
      */
-    public function command($command, $args)
+    public function command($command, array $args)
     {
         try {
             $reflectionMethod = new \ReflectionMethod(__CLASS__, $command);
@@ -85,8 +85,7 @@ class Executor
             } else {
                 $this->msg = "Congrats! Coin has been added to inventory.";
             }
-        } catch (NotFound $e)
-        {
+        } catch (NotFound $e) {
             $this->msg = $e->getMessage();
         }
     }
